@@ -371,7 +371,11 @@ body {
     cursor: pointer;
     font-weight: bold;
 }
-
+.default-hint {
+    font-size: 11px;
+    color: blue;
+    margin-top: 3px;
+}
 /* Loading Overlay Background */
 .loading-overlay {
     position: fixed;
