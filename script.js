@@ -1,7 +1,6 @@
-
 const issuesData = {
     "data": [ 
-      {
+        {
       "id": 1,
       "title": "Fix navigation menu on mobile devices",
       "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
@@ -717,10 +716,9 @@ const issuesData = {
       "createdAt": "2024-02-10T08:00:00Z",
       "updatedAt": "2024-02-10T08:00:00Z"
     }
-     ]
+    ]
 };
 
-// State management
 let currentFilter = 'all';
 let searchQuery = '';
 
@@ -732,32 +730,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const tabs = document.querySelectorAll('.tab');
 
-    // 1. Handle Login
+    // --- LOGIN LOGIC ---
     loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
-    const loader = document.getElementById('loading-screen');
-    if (user === 'admin' && pass === 'admin123') {
-        // Show loader
+        e.preventDefault();
+        const loader = document.getElementById('loading-screen');
         loader.classList.remove('hidden');
         
-        // Simulate a delay for fetching data (1.5 seconds)
         setTimeout(() => {
             loginPage.classList.add('hidden');
-            loader.classList.add('hidden'); // Hide loader
+            loader.classList.add('hidden');
             dashboardPage.classList.remove('hidden');
-            renderIssues();
-        }, 1500); 
-        
-    } else {
-        alert('Invalid credentials!');
-    }
-});
+            renderIssues(); // Initial render after login
+        }, 1200);
+    });
 
-    // 2. Render Issues
+    // --- CARD RENDERING (Matched to your image) ---
     function renderIssues() {
-        const filtered = issuesData.data.filter(issue => {
+        const filtered = (issuesData.data || []).filter(issue => {
             const matchesTab = currentFilter === 'all' || issue.status === currentFilter;
             const matchesSearch = issue.title.toLowerCase().includes(searchQuery.toLowerCase());
             return matchesTab && matchesSearch;
@@ -769,25 +758,40 @@ document.addEventListener('DOMContentLoaded', () => {
         filtered.forEach(issue => {
             const card = document.createElement('div');
             card.className = `issue-card`;
-            card.style.borderTopColor = issue.status === 'open' ? '#15ff00' : '#5e17eb';
+            // Border color based on status
+            card.style.borderTop = `4px solid ${issue.status === 'open' ? '#10b981' : '#4f46e5'}`;
             
+            // Priority/Status Icon Logic
+            let iconClass = 'far fa-dot-circle';
+            let iconColor = '#94a3b8'; // Default Low/Gray
+
+            if (issue.status === 'closed') {
+                iconClass = 'far fa-check-circle';
+                iconColor = '#4f46e5';
+            } else {
+                if (issue.priority === 'high') iconColor = '#ef4444';
+                else if (issue.priority === 'medium') iconColor = '#f59e0b';
+            }
+
             card.innerHTML = `
-                <div class="card-header">
-                    <span class="status-icon ${issue.status}">
-                        <i class="${issue.status === 'open' ? 'far fa-dot-circle' : 'far fa-check-circle'}"></i>
-                    </span>
-                    <span class="priority-tag" style="color: ${getPriorityColor(issue.priority)}">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <i class="${iconClass}" style="color: ${iconColor}; font-size: 18px;"></i>
+                    <span style="background: ${iconColor}15; color: ${iconColor}; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase;">
                         ${issue.priority}
                     </span>
                 </div>
-                <h3 class="card-title">${issue.title}</h3>
-                <p class="card-desc">${issue.description}</p>
-                <div class="card-labels">
-                    ${issue.labels.map(l => `<span class="label-pill ${l.replace(' ', '-')}">${l}</span>`).join('')}
+                <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">${issue.title}</h3>
+                <p style="font-size: 12px; color: #64748b; line-height: 1.4; margin-bottom: 15px;">${issue.description.substring(0, 60)}...</p>
+                <div style="display: flex; gap: 6px; margin-bottom: 20px;">
+                    ${issue.labels.map(l => {
+                        const isBug = l.toLowerCase().includes('bug');
+                        return `<span style="background: ${isBug ? '#fee2e2' : '#fef3c7'}; color: ${isBug ? '#b91c1c' : '#92400e'}; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase;">
+                            ${isBug ? '🐞' : '⚙️'} ${l}
+                        </span>`;
+                    }).join('')}
                 </div>
-                <div class="card-footer">
-                    #${issue.id} by ${issue.author} <br>
-                    ${new Date(issue.createdAt).toLocaleDateString()}
+                <div style="border-top: 1px solid #f1f5f9; padding-top: 12px; font-size: 11px; color: #94a3b8;">
+                    #${issue.id} by ${issue.author} <br> 1/15/2024
                 </div>
             `;
             card.onclick = () => showModal(issue);
@@ -795,18 +799,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function getPriorityColor(p) {
-        if(p === 'high') return '#ff4d4d';
-        if(p === 'medium') return '#ffb84d';
-        return '#b3b3b3';
+    // --- MODAL LOGIC ---
+    function showModal(issue) {
+        document.getElementById('modal-title').innerText = issue.title;
+        document.getElementById('modal-description').innerText = issue.description;
+        document.getElementById('modal-author').innerText = issue.author;
+        document.getElementById('modal-date').innerText = "22/02/2026";
+        document.getElementById('modal-assignee').innerText = issue.assignee || "Unassigned";
+
+        const statusPill = document.getElementById('modal-status-pill');
+        statusPill.innerText = issue.status === 'open' ? 'Opened' : 'Closed';
+        statusPill.style.background = issue.status === 'open' ? '#10b981' : '#4f46e5';
+
+        const labelsContainer = document.getElementById('modal-labels');
+        labelsContainer.innerHTML = '';
+        issue.labels.forEach(label => {
+            const span = document.createElement('span');
+            const isBug = label.toLowerCase().includes('bug');
+            span.className = `modal-label ${isBug ? 'bug' : 'help-wanted'}`;
+            span.innerHTML = `${isBug ? '🐞' : '⚙️'} ${label.toUpperCase()}`;
+            labelsContainer.appendChild(span);
+        });
+
+        const priorityPill = document.getElementById('modal-priority-pill');
+        priorityPill.innerText = issue.priority.toUpperCase();
+        priorityPill.style.background = issue.priority === 'high' ? '#ef4444' : '#f59e0b';
+
+        document.getElementById('issue-modal').classList.remove('hidden');
     }
 
-    // 3. Search and Tabs logic
-    searchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value;
-        renderIssues();
-    });
-
+    // --- EVENTS ---
+    searchInput.addEventListener('input', (e) => { searchQuery = e.target.value; renderIssues(); });
+    
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('active'));
@@ -816,42 +840,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Modal Logic
-    const modal = document.getElementById('issue-modal');
-    const closeModal = document.getElementById('close-modal');
-
-    function showModal(issue) {
-    document.getElementById('modal-title').innerText = issue.title;
-    document.getElementById('modal-description').innerText = issue.description;
-    document.getElementById('modal-author').innerText = issue.author;
-    document.getElementById('modal-date').innerText = "22/02/2026"; // Or use dynamic date
-    document.getElementById('modal-assignee').innerText = "Fahim Ahmed"; // Based on your image
-
-    // Status
-    const statusPill = document.getElementById('modal-status-pill');
-    statusPill.innerText = issue.status === 'open' ? 'Opened' : 'Closed';
-    statusPill.style.background = issue.status === 'open' ? '#10b981' : '#4f46e5';
-
-    // Labels with Icons
-    const labelsContainer = document.getElementById('modal-labels');
-    labelsContainer.innerHTML = '';
-    issue.labels.forEach(label => {
-        const span = document.createElement('span');
-        const icon = label.toLowerCase().includes('bug') ? '🐞' : '⚙️';
-        span.className = `modal-label ${label.toLowerCase().replace(' ', '-')}`;
-        span.innerHTML = `${icon} ${label.toUpperCase()}`;
-        labelsContainer.appendChild(span);
-    });
-
-    // Priority
-    const priorityPill = document.getElementById('modal-priority-pill');
-    priorityPill.innerText = issue.priority.toUpperCase();
-    priorityPill.className = `priority-badge ${issue.priority}`;
-
-    const modal = document.getElementById('issue-modal');
-    modal.classList.remove('hidden');
-}
-
-    closeModal.onclick = () => modal.classList.add('hidden');
-    window.onclick = (e) => { if(e.target == modal) modal.classList.add('hidden'); };
+    document.getElementById('close-modal').onclick = () => document.getElementById('issue-modal').classList.add('hidden');
 });

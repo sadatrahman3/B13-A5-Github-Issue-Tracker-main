@@ -10,37 +10,25 @@
 <body>
 
     <div id="loading-screen" class="loading-overlay hidden">
-    <div class="spinner"></div>
-    <p>Loading Issues...</p>
+        <div class="spinner"></div>
+        <p>Loading Issues...</p>
     </div>
 
     <div id="login-page" class="auth-container">
         <div class="auth-card">
             <i class="fab fa-github logo-icon"></i>
             <h2>GitHub Issues Tracker</h2>
-            <p class="subtitle">Sign in to manage your issues</p>
-            
             <form id="login-form">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" id="username" placeholder="Enter Username" required>
-                    <small class="default-hint">Default: admin</small>
+                    <input type="text" id="username" placeholder="admin" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="password" placeholder="Enter Password" required>
-                    <small class="default-hint">Default: admin123</small>
+                    <input type="password" id="password" placeholder="admin123" required>
                 </div>
                 <button type="submit" class="btn-primary">Sign In</button>
             </form>
-
-            <div class="divider"><span>OR</span></div>
-            
-            <div class="demo-creds">
-                <p>Demo Credentials:</p>
-                <p><strong>Username:</strong> admin</p>
-                <p><strong>Password:</strong> admin123</p>
-            </div>
         </div>
     </div>
 
@@ -55,7 +43,7 @@
                     <i class="fas fa-search"></i>
                     <input type="text" id="search-input" placeholder="Search issues...">
                 </div>
-                <button class="btn-new"><i class="fas fa-plus"></i> New Issue</button>
+                <button class="btn-new">+ New Issue</button>
             </div>
         </nav>
 
@@ -66,49 +54,50 @@
                 <button class="tab" data-filter="closed">Closed</button>
             </div>
 
-            <div class="stats-header">
-                <div class="stats-info">
-                    <div class="icon-circle"><i class="fas fa-sync-alt"></i></div>
+            <div class="stats-bar">
+                <div class="stats-left">
+                    <div class="icon-bg"><i class="fas fa-bullseye"></i></div>
                     <div>
-                        <h3 id="issue-count">0 Issues</h3>
+                        <h2 id="issue-count">0 Issues</h2>
                         <p>Track and manage your project issues</p>
                     </div>
                 </div>
-                <div class="status-indicators">
-                    <span class="dot open"></span> Open 
-                    <span class="dot closed"></span> Closed
+                <div class="status-legend">
+                    <span><span class="dot open"></span> Open</span>
+                    <span><span class="dot closed"></span> Closed</span>
                 </div>
             </div>
 
-            <div id="issues-grid" class="issues-grid">
-                </div>
+            <div id="issues-grid" class="issues-grid"></div>
         </main>
     </div>
 
     <div id="issue-modal" class="modal hidden">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title"></h2>
-                <div class="modal-meta">
-                    <span id="modal-status-pill" class="pill"></span>
-                    <span class="meta-text">Opened by <strong id="modal-author"></strong> • <span id="modal-date"></span></span>
+            <h2 id="modal-title"></h2>
+            <div class="modal-subheader">
+                <span id="modal-status-pill" class="status-pill"></span>
+                <span class="author-info">Opened by <span id="modal-author"></span> • <span id="modal-date"></span></span>
+            </div>
+
+            <div id="modal-labels" class="modal-labels-container"></div>
+
+            <p id="modal-description" class="modal-body-text"></p>
+
+            <div class="modal-meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">Assignee:</span>
+                    <span id="modal-assignee" class="meta-value"></span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Priority:</span>
+                    <span id="modal-priority-pill" class="priority-pill"></span>
                 </div>
             </div>
-            <div class="modal-body">
-                <div id="modal-labels" class="labels-row"></div>
-                <p id="modal-description"></p>
-                <div class="modal-footer-info">
-                    <div class="info-item">
-                        <label>Assignee:</label>
-                        <span id="modal-assignee"></span>
-                    </div>
-                    <div class="info-item">
-                        <label>Priority:</label>
-                        <span id="modal-priority-pill" class="pill-priority"></span>
-                    </div>
-                </div>
+
+            <div class="modal-actions">
+                <button id="close-modal" class="btn-modal-close">Close</button>
             </div>
-            <button id="close-modal" class="btn-close">Close</button>
         </div>
     </div>
 
