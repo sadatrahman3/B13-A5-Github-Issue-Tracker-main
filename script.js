@@ -734,18 +734,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Handle Login
     loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const user = document.getElementById('username').value;
-        const pass = document.getElementById('password').value;
-
-        if (user === 'admin' && pass === 'admin123') {
+    e.preventDefault();
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const loader = document.getElementById('loading-screen');
+    if (user === 'admin' && pass === 'admin123') {
+        // Show loader
+        loader.classList.remove('hidden');
+        
+        // Simulate a delay for fetching data (1.5 seconds)
+        setTimeout(() => {
             loginPage.classList.add('hidden');
+            loader.classList.add('hidden'); // Hide loader
             dashboardPage.classList.remove('hidden');
             renderIssues();
-        } else {
-            alert('Invalid credentials! Hint: admin / admin123');
-        }
-    });
+        }, 1500); 
+        
+    } else {
+        alert('Invalid credentials!');
+    }
+});
 
     // 2. Render Issues
     function renderIssues() {
