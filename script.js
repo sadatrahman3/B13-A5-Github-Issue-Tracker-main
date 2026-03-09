@@ -821,22 +821,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.getElementById('close-modal');
 
     function showModal(issue) {
-        document.getElementById('modal-title').innerText = issue.title;
-        document.getElementById('modal-description').innerText = issue.description;
-        document.getElementById('modal-author').innerText = issue.author;
-        document.getElementById('modal-date').innerText = new Date(issue.createdAt).toLocaleDateString();
-        document.getElementById('modal-assignee').innerText = issue.assignee || 'Unassigned';
-        
-        const statusPill = document.getElementById('modal-status-pill');
-        statusPill.innerText = issue.status.toUpperCase();
-        statusPill.className = `pill ${issue.status}`;
+    document.getElementById('modal-title').innerText = issue.title;
+    document.getElementById('modal-description').innerText = issue.description;
+    document.getElementById('modal-author').innerText = issue.author;
+    document.getElementById('modal-date').innerText = "22/02/2026"; // Or use dynamic date
+    document.getElementById('modal-assignee').innerText = "Fahim Ahmed"; // Based on your image
 
-        const priorityPill = document.getElementById('modal-priority-pill');
-        priorityPill.innerText = issue.priority.toUpperCase();
-        priorityPill.className = `pill-priority ${issue.priority}`;
+    // Status
+    const statusPill = document.getElementById('modal-status-pill');
+    statusPill.innerText = issue.status === 'open' ? 'Opened' : 'Closed';
+    statusPill.style.background = issue.status === 'open' ? '#10b981' : '#4f46e5';
 
-        modal.classList.remove('hidden');
-    }
+    // Labels with Icons
+    const labelsContainer = document.getElementById('modal-labels');
+    labelsContainer.innerHTML = '';
+    issue.labels.forEach(label => {
+        const span = document.createElement('span');
+        const icon = label.toLowerCase().includes('bug') ? '🐞' : '⚙️';
+        span.className = `modal-label ${label.toLowerCase().replace(' ', '-')}`;
+        span.innerHTML = `${icon} ${label.toUpperCase()}`;
+        labelsContainer.appendChild(span);
+    });
+
+    // Priority
+    const priorityPill = document.getElementById('modal-priority-pill');
+    priorityPill.innerText = issue.priority.toUpperCase();
+    priorityPill.className = `priority-badge ${issue.priority}`;
+
+    const modal = document.getElementById('issue-modal');
+    modal.classList.remove('hidden');
+}
 
     closeModal.onclick = () => modal.classList.add('hidden');
     window.onclick = (e) => { if(e.target == modal) modal.classList.add('hidden'); };

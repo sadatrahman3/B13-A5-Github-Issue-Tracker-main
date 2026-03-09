@@ -458,3 +458,57 @@ body {
     cursor: pointer;
     float: right;
 }
+
+/* Mobile Responsive (Below 550px) */
+
+
+@media (max-width: 550px) {
+
+.navbar{
+    padding:15px 15px;
+    flex-direction:column;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.nav-right{
+    width:100%;
+}
+
+.search-box input{
+    width:100%;
+}
+
+.content{
+    padding:0 10px;
+}
+
+.filter-tabs{
+    width:100%;
+    justify-content:space-between;
+}
+
+.tab{
+    flex:1;
+    text-align:center;
+    padding:10px 0;
+}
+
+.stats-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+}
+
+
+.issues-grid{
+    grid-template-columns: 1fr;
+}
+
+
+
+.issue-card{
+    padding:16px;
+}
+
+}
