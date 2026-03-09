@@ -730,19 +730,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const tabs = document.querySelectorAll('.tab');
 
-    // --- LOGIN LOGIC ---
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const loader = document.getElementById('loading-screen');
+
+    // --- LOGIN LOGIC WITH CREDENTIAL VALIDATION ---
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    
+    const enteredUsername = document.getElementById('username').value;
+    const enteredPassword = document.getElementById('password').value;
+    const loader = document.getElementById('loading-screen');
+
+   
+    if (enteredUsername === 'admin' && enteredPassword === 'admin123') {
+      
         loader.classList.remove('hidden');
         
         setTimeout(() => {
+            
             loginPage.classList.add('hidden');
             loader.classList.add('hidden');
             dashboardPage.classList.remove('hidden');
-            renderIssues(); // Initial render after login
+            
+          
+            renderIssues(); 
         }, 1200);
-    });
+    } else {
+        
+        alert('Invalid Username or Password. Please use the demo credentials provided below.');
+    }
+});
 
     // --- CARD RENDERING  ---
     function renderIssues() {

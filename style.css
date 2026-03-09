@@ -18,59 +18,98 @@ body {
     display: none !important;
 }
 
-/* Auth Styling */
-.auth-container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Auth Card Styling */
+.auth-container { 
+    height: 100vh; 
+    width: 100%;
+    display: flex; 
+    align-items: center;    /* Vertical center */
+    justify-content: center; /* Horizontal center */
+    background-color: #f8fafc; /* Light grey background like the image */
 }
-
-.auth-card {
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    width: 350px;
+.auth-card { 
+    background: white; 
+    padding: 60px 40px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
+    width: 450px; 
     text-align: center;
 }
 
-.logo-icon {
-    font-size: 50px;
-    margin-bottom: 20px;
-}
+.brand-icon { font-size: 80px; color: #1f2937; margin-bottom: 20px; }
+.brand h2 { margin: 0 0 8px 0; font-size: 24px; color: #1f2937; }
+.subtitle { color: #64748b; margin-bottom: 30px; font-size: 14px; }
 
-.form-group {
-    text-align: left;
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
+/* Form Elements */
+.form-group { text-align: left; margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #1f2937; }
+.form-group input { 
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
     font-size: 14px;
-    margin-bottom: 5px;
-    font-weight: 600;
 }
+.helper-text { display: block; color: #6366f1; font-size: 12px; margin-top: 6px; }
 
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-sizing: border-box;
-}
-
-.btn-primary {
-    width: 100%;
-    padding: 12px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
+/* Buttons */
+.btn-primary { 
+    width: 100%; 
+    padding: 14px; 
+    background: #4f12ff; /* That specific bright purple/blue */
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 16px;
     margin-top: 10px;
+    transition: background 0.2s ease;
 }
+
+.btn-primary:hover {
+    background: #3e0ee0;
+}
+
+/* Divider & Demo Box */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.divider:not(:empty)::before { margin-right: .75em; }
+.divider:not(:empty)::after { margin-left: .75em; }
+.divider span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 0 15px;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.demo-box {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: #64748b;
+    font-size: 13px;
+}
+.credentials { margin-top: 10px; color: #1f2937; line-height: 1.6; }
 
 /* Navbar */
 .navbar {
