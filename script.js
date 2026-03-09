@@ -744,7 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1200);
     });
 
-    // --- CARD RENDERING (Matched to your image) ---
+    // --- CARD RENDERING  ---
     function renderIssues() {
         const filtered = (issuesData.data || []).filter(issue => {
             const matchesTab = currentFilter === 'all' || issue.status === currentFilter;
@@ -758,13 +758,12 @@ document.addEventListener('DOMContentLoaded', () => {
         filtered.forEach(issue => {
             const card = document.createElement('div');
             card.className = `issue-card`;
-            // Border color based on status
+           
             card.style.borderTop = `4px solid ${issue.status === 'open' ? '#10b981' : '#4f46e5'}`;
             
-            // Priority/Status Icon Logic
+  
             let iconClass = 'far fa-dot-circle';
-            let iconColor = '#94a3b8'; // Default Low/Gray
-
+            let iconColor = '#94a3b8'; 
             if (issue.status === 'closed') {
                 iconClass = 'far fa-check-circle';
                 iconColor = '#4f46e5';
