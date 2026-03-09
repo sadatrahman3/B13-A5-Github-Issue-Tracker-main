@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Issues Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="login-page" class="auth-container">
+        <div class="auth-card">
+            <i class="fab fa-github logo-icon"></i>
+            <h2>GitHub Issues Tracker</h2>
+            <p class="subtitle">Sign in to manage your issues</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter Username" required>
+                    <small class="default-hint">Default: admin</small>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter Password" required>
+                    <small class="default-hint">Default: admin123</small>
+                </div>
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+
+            <div class="divider"><span>OR</span></div>
+            
+            <div class="demo-creds">
+                <p>Demo Credentials:</p>
+                <p><strong>Username:</strong> admin</p>
+                <p><strong>Password:</strong> admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-page" class="dashboard-container hidden">
+        <nav class="navbar">
+            <div class="nav-left">
+                <i class="fab fa-github"></i>
+                <span>GitHub Issues Tracker</span>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search issues...">
+                </div>
+                <button class="btn-new"><i class="fas fa-plus"></i> New Issue</button>
+            </div>
+        </nav>
+
+        <main class="content">
+            <div class="filter-tabs">
+                <button class="tab active" data-filter="all">All</button>
+                <button class="tab" data-filter="open">Open</button>
+                <button class="tab" data-filter="closed">Closed</button>
+            </div>
+
+            <div class="stats-header">
+                <div class="stats-info">
+                    <div class="icon-circle"><i class="fas fa-sync-alt"></i></div>
+                    <div>
+                        <h3 id="issue-count">0 Issues</h3>
+                        <p>Track and manage your project issues</p>
+                    </div>
+                </div>
+                <div class="status-indicators">
+                    <span class="dot open"></span> Open 
+                    <span class="dot closed"></span> Closed
+                </div>
+            </div>
+
+            <div id="issues-grid" class="issues-grid">
+                </div>
+        </main>
+    </div>
+
+    <div id="issue-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <div class="modal-meta">
+                    <span id="modal-status-pill" class="pill"></span>
+                    <span class="meta-text">Opened by <strong id="modal-author"></strong> • <span id="modal-date"></span></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="modal-labels" class="labels-row"></div>
+                <p id="modal-description"></p>
+                <div class="modal-footer-info">
+                    <div class="info-item">
+                        <label>Assignee:</label>
+                        <span id="modal-assignee"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Priority:</label>
+                        <span id="modal-priority-pill" class="pill-priority"></span>
+                    </div>
+                </div>
+            </div>
+            <button id="close-modal" class="btn-close">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
