@@ -25,7 +25,7 @@ body {
     display: flex; 
     align-items: center;    /* Vertical center */
     justify-content: center; /* Horizontal center */
-    background-color: #f8fafc; /* Light grey background like the image */
+    background-color: #f8fafc; 
 }
 .auth-card { 
     background: white; 
